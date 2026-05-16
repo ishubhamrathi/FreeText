@@ -1,18 +1,14 @@
-from audio.recorder import record_audio
-
-from transcription.transcriber import (
-    transcribe_audio
+from services.pipeline_service import (
+    PipelineService
 )
 
 
 def main():
     input("Press Enter to start recording...")
 
-    audio_file = record_audio()
+    pipeline = PipelineService()
 
-    print("\nTranscribing audio...\n")
-
-    result = transcribe_audio(audio_file)
+    result = pipeline.execute()
 
     print("=" * 50)
 
