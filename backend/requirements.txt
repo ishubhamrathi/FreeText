@@ -6,3 +6,4 @@ pynput
 openai-whisper
 ollama
 keyboard
+scipy
