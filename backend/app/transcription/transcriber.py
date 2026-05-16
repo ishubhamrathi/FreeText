@@ -1,13 +1,16 @@
 from faster_whisper import WhisperModel
 
-
-MODEL_PATH = "models/whisper/base"
+from config.settings import (
+    WHISPER_MODEL_PATH,
+    WHISPER_DEVICE,
+    WHISPER_COMPUTE_TYPE
+)
 
 
 model = WhisperModel(
-    MODEL_PATH,
-    device="cpu",
-    compute_type="int8"
+    str(WHISPER_MODEL_PATH),
+    device=WHISPER_DEVICE,
+    compute_type=WHISPER_COMPUTE_TYPE
 )
 
 

@@ -1,14 +1,14 @@
 from datetime import datetime
-from pathlib import Path
 
 import sounddevice as sd
 from scipy.io.wavfile import write
 
-
-SAMPLE_RATE = 16000
-DURATION = 5
-
-RECORDINGS_DIR = Path("data/recordings")
+from config.settings import (
+    SAMPLE_RATE,
+    CHANNELS,
+    DEFAULT_RECORD_DURATION,
+    RECORDINGS_DIR
+)
 
 
 def generate_filename():
@@ -18,16 +18,19 @@ def generate_filename():
 
 
 def record_audio():
-    RECORDINGS_DIR.mkdir(parents=True, exist_ok=True)
+    RECORDINGS_DIR.mkdir(
+        parents=True,
+        exist_ok=True
+    )
 
     output_file = generate_filename()
 
     print("Recording started...")
 
     audio_data = sd.rec(
-        int(DURATION * SAMPLE_RATE),
+        int(DEFAULT_RECORD_DURATION * SAMPLE_RATE),
         samplerate=SAMPLE_RATE,
-        channels=1,
+        channels=CHANNELS,
         dtype="int16"
     )
 

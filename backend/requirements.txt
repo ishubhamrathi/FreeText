@@ -7,3 +7,4 @@ openai-whisper
 ollama
 keyboard
 scipy
+python-dotenv
