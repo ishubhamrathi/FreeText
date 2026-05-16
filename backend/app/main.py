@@ -15,7 +15,8 @@ def main():
 
     result = pipeline.execute()
 
-    print("\nTranscript:")
+    print("\nCleaned Transcript:\n")
+
     print(result.text)
 
     print(
