@@ -1,29 +1,34 @@
+import time
+
 from services.pipeline_service import (
     PipelineService
 )
 
 
 def main():
-    input("Press Enter to start recording...")
+    input(
+        "Open any text editor.\n"
+        "Press Enter to start recording..."
+    )
 
     pipeline = PipelineService()
 
     result = pipeline.execute()
 
-    print("=" * 50)
-
-    print(f"Detected Language : {result.language}")
-
-    print(
-        f"Processing Time  : "
-        f"{result.processing_time}s"
-    )
-
-    print("\nTranscript:\n")
-
+    print("\nTranscript:")
     print(result.text)
 
-    print("=" * 50)
+    print(
+        "\nSwitch to target window..."
+    )
+
+    time.sleep(5)
+
+    pipeline.typing_service.type_text(
+        result.text
+    )
+
+    print("\nTyping completed.")
 
 
 if __name__ == "__main__":
