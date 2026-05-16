@@ -1,0 +1,8 @@
+sounddevice
+numpy
+faster-whisper
+pyautogui
+pynput
+openai-whisper
+ollama
+keyboard
