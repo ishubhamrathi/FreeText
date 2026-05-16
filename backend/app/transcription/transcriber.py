@@ -1,9 +1,15 @@
+import time
+
 from faster_whisper import WhisperModel
 
 from config.settings import (
     WHISPER_MODEL_PATH,
     WHISPER_DEVICE,
     WHISPER_COMPUTE_TYPE
+)
+
+from models.transcription_result import (
+    TranscriptionResult
 )
 
 
@@ -15,13 +21,22 @@ model = WhisperModel(
 
 
 def transcribe_audio(audio_path):
-    segments, info = model.transcribe(audio_path)
+    start_time = time.time()
 
-    print(f"Detected language: {info.language}")
+    segments, info = model.transcribe(audio_path)
 
     transcript = ""
 
     for segment in segments:
         transcript += segment.text + " "
 
-    return transcript.strip()
+    processing_time = round(
+        time.time() - start_time,
+        2
+    )
+
+    return TranscriptionResult(
+        text=transcript.strip(),
+        language=info.language,
+        processing_time=processing_time
+    )
