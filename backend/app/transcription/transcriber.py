@@ -23,7 +23,10 @@ model = WhisperModel(
 def transcribe_audio(audio_path):
     start_time = time.time()
 
-    segments, info = model.transcribe(audio_path)
+    segments, info = model.transcribe(
+        audio_path,
+        beam_size=5
+    )
 
     transcript = ""
 

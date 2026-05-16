@@ -1,7 +1,12 @@
 from huggingface_hub import snapshot_download
 
 
+# snapshot_download(
+#     repo_id="Systran/faster-whisper-base",
+#     local_dir="models/whisper/base"
+# )
+
 snapshot_download(
-    repo_id="Systran/faster-whisper-base",
-    local_dir="models/whisper/base"
+    repo_id="Systran/faster-whisper-small",
+    local_dir="models/whisper/small"
 )
