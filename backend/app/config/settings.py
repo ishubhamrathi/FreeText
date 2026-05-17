@@ -61,3 +61,30 @@ OLLAMA_MODEL = "qwen3:4b"
 OPENAI_API_KEY = ""
 
 DEFAULT_PROFILE = "casual"
+
+PUSH_TO_TALK_KEYS = {
+    "Key.cmd",
+    "Key.alt_l"
+}
+
+CLEANUP_MODE = "local"
+# local
+# ollama
+# openai
+# gemini
+# claude
+
+LOCAL_AI_PROVIDER = "ollama"
+
+LOCAL_ENGLISH_PROVIDER = "languagetool"
+
+LOCAL_MULTILINGUAL_PROVIDER = "ollama"
+
+LIVE_CHUNK_SECONDS = 4
+
+LIVE_OVERLAP_SECONDS = 1
+
+LIVE_STRIDE_SECONDS = (
+    LIVE_CHUNK_SECONDS
+    - LIVE_OVERLAP_SECONDS
+)

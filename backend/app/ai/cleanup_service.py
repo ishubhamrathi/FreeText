@@ -1,38 +1,22 @@
-from ai.profiles.factory import (
-    ProfileFactory
-)
-
-from ai.providers.factory import (
-    CleanupProviderFactory
-)
+from ai.router import CleanupRouter
 
 
 class CleanupService:
 
     def __init__(self):
 
-        self.provider = (
-            CleanupProviderFactory
-            .create()
-        )
-
-        self.profile = (
-            ProfileFactory.create()
-        )
+        self.router = CleanupRouter()
 
     def cleanup_text(
         self,
-        text: str
-    ):
+        text: str,
+        language: str
+    ) -> str:
 
-        prompt = (
-            self.profile.build_prompt(
-                text
-            )
+        provider = self.router.get_provider(
+            language
         )
 
-        return (
-            self.provider.cleanup_text(
-                prompt
-            )
+        return provider.cleanup_text(
+            text
         )

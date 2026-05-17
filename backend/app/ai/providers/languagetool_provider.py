@@ -10,17 +10,28 @@ class LanguageToolProvider(
 ):
 
     def __init__(self):
+
         self.tool = (
             language_tool_python
-            .LanguageTool("en-US")
+            .LanguageTool(
+                "en-US"
+            )
         )
 
     def cleanup_text(
         self,
         text: str
-    ) -> str:
-        matches = self.tool.check(text)
+    ):
 
-        return self.tool.correct(
-            text
+        matches = (
+            self.tool.check(
+                text
+            )
+        )
+
+        return (
+            self.tool
+            .correct(
+                text
+            )
         )

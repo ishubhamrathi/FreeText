@@ -13,6 +13,12 @@ class OllamaProvider(
     CleanupProvider
 ):
 
+    @property
+    def uses_prompt(
+        self
+    ):
+        return True
+
     def cleanup_text(
         self,
         text: str

@@ -29,13 +29,13 @@ class PipelineService:
 
         cleaned_text = (
             self.cleanup_service.cleanup_text(
-                transcription_result.text
+                transcription_result.text,
+                transcription_result.language
             )
         )
 
-        transcription_result.text = (
-            cleaned_text
-        )
+        transcription_result.text = cleaned_text
+
 
         return transcription_result
 
@@ -45,5 +45,25 @@ class PipelineService:
         self.typing_service.type_text(
             result.text
         )
+
+        return result
+
+    def execute_from_audio(
+        self,
+        audio_file
+    ):
+
+        result = transcribe_audio(
+            audio_file
+        )
+
+        cleaned = (
+            self.cleanup_service.cleanup_text(
+                result.text,
+                result.language
+            )
+        )
+
+        result.text = cleaned
 
         return result

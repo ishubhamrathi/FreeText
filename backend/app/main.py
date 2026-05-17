@@ -1,35 +1,19 @@
-import time
-
-from services.pipeline_service import (
-    PipelineService
+from hotkeys.listener import (
+    HoldToTalkListener
 )
 
 
 def main():
-    input(
-        "Open any text editor.\n"
-        "Press Enter to start recording..."
+
+    listener = (
+        HoldToTalkListener()
     )
-
-    pipeline = PipelineService()
-
-    result = pipeline.execute()
-
-    print("\nCleaned Transcript:\n")
-
-    print(result.text)
 
     print(
-        "\nSwitch to target window..."
+        "Hold Win + Alt to speak"
     )
 
-    time.sleep(5)
-
-    pipeline.typing_service.type_text(
-        result.text
-    )
-
-    print("\nTyping completed.")
+    listener.listen()
 
 
 if __name__ == "__main__":
