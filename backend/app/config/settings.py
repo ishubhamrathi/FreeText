@@ -59,3 +59,5 @@ CLEANUP_PROVIDER = "languagetool"
 OLLAMA_MODEL = "qwen3:4b"
 
 OPENAI_API_KEY = ""
+
+DEFAULT_PROFILE = "casual"
