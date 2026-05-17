@@ -1,3 +1,5 @@
+import traceback
+
 from ai.router import CleanupRouter
 
 
@@ -17,6 +19,12 @@ class CleanupService:
             language
         )
 
-        return provider.cleanup_text(
-            text
-        )
+        try:
+            return provider.cleanup_text(
+                text
+            )
+        except Exception:
+            print("Cleanup provider failed, returning original text:")
+            traceback.print_exc()
+            return text
+

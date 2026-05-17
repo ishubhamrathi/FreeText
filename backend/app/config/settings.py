@@ -88,3 +88,10 @@ LIVE_STRIDE_SECONDS = (
     LIVE_CHUNK_SECONDS
     - LIVE_OVERLAP_SECONDS
 )
+
+# =========================
+# LIVE STREAMING
+# =========================
+
+
+LIVE_PROCESS_INTERVAL = 3

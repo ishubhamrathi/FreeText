@@ -7,36 +7,39 @@ class TokenStabilizer:
 
     def __init__(self):
 
-        self.tokens = []
-
-        self.commit_index = 0
+        self.previous = []
 
     def update(
         self,
-        incoming_tokens
+        current
     ):
-
-        self.tokens = incoming_tokens
 
         stable = []
 
-        for i in range(
-            self.commit_index,
-            len(self.tokens) - 2
-        ):
+        limit = min(
+            len(self.previous),
+            len(current)
+        )
 
-            token = self.tokens[i]
+        for i in range(limit):
 
-            if not token.committed:
+            old = self.previous[i]
 
-                token.committed = True
+            new = current[i]
+
+            if (
+                old.text
+                == new.text
+            ):
 
                 stable.append(
-                    token
+                    new
                 )
 
-        self.commit_index += len(
-            stable
-        )
+            else:
+
+                break
+
+        self.previous = current
 
         return stable

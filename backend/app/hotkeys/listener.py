@@ -1,24 +1,28 @@
 from pynput import keyboard
 
-from audio.recorder import Recorder
-from hotkeys.context import HotkeyContext
 from config.settings import (
     PUSH_TO_TALK_KEYS
 )
-from services.pipeline_service import (
-    PipelineService
+
+from hotkeys.context import (
+    HotkeyContext
 )
 
+from hotkeys.live_controller import (
+    LiveController
+)
 
 class HoldToTalkListener:
 
     def __init__(self):
 
-        self.context = HotkeyContext()
+        self.context = (
+            HotkeyContext()
+        )
 
-        self.recorder = Recorder()
-
-        self.pipeline = PipelineService()
+        self.controller = (
+            LiveController()
+        )
 
     def on_press(
         self,
@@ -31,15 +35,11 @@ class HoldToTalkListener:
             key_name
         )
 
-        if (
-            self.context.is_active(
-                PUSH_TO_TALK_KEYS
-            )
-            and self.recorder.state.value
-            == "idle"
+        if self.context.is_active(
+            PUSH_TO_TALK_KEYS
         ):
 
-            self.recorder.start()
+            self.controller.start()
 
     def on_release(
         self,
@@ -48,6 +48,9 @@ class HoldToTalkListener:
 
         key_name = str(key)
 
+        self.context.release(
+            key_name
+        )
         was_active = (
             self.context.is_active(
                 PUSH_TO_TALK_KEYS
@@ -66,25 +69,31 @@ class HoldToTalkListener:
 
         if was_active and not still_active:
 
-            audio = self.recorder.stop()
+            self.controller.stop()
 
-            if audio:
+    def listen(
+        self
+    ):
 
-                result = (
-                    self.pipeline.execute_from_audio(
-                        audio
-                    )
-                )
+        self.listener = (
+            keyboard.Listener(
+                on_press=self.on_press,
+                on_release=self.on_release
+            )
+        )
 
-                print(
-                    result.text
-                )
+        self.listener.start()
 
-    def listen(self):
+        return self.listener
 
-        with keyboard.Listener(
-            on_press=self.on_press,
-            on_release=self.on_release
-        ) as listener:
 
-            listener.join()
+    def stop(
+        self
+    ):
+
+        if hasattr(
+            self,
+            "listener"
+        ):
+
+            self.listener.stop()

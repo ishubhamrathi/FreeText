@@ -11,13 +11,19 @@ class WhisperStream:
 
     def transcribe(
         self,
-        audio
+        audio_path
     ):
+        
+        print(
+            "Starting transcription"
+        )
 
-        result = (
-            transcribe_audio(
-                audio
-            )
+        result = transcribe_audio(
+            audio_path
+        )
+
+        print(
+            result.text
         )
 
         tokens = []
@@ -27,9 +33,7 @@ class WhisperStream:
             tokens.append(
                 TranscriptToken(
                     text=segment.text,
-
                     start=segment.start,
-
                     end=segment.end
                 )
             )

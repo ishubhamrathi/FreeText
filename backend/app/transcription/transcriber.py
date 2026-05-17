@@ -28,7 +28,8 @@ def transcribe_audio(audio_path):
     segments, info = model.transcribe(
         audio_path,
         beam_size=1,
-        vad_filter=True
+        vad_filter=True,
+        condition_on_previous_text=True
     )
 
     segments = list(segments)
