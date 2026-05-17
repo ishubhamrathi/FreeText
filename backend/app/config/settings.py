@@ -13,6 +13,7 @@ RECORDINGS_DIR = DATA_DIR / "recordings"
 
 MODELS_DIR = BASE_DIR / "models"
 
+OLLAMA_MODEL = "qwen3:4b"
 
 # =========================
 # AUDIO SETTINGS
@@ -37,9 +38,9 @@ WHISPER_MODEL_PATH = (
     / WHISPER_MODEL_NAME
 )
 
-WHISPER_DEVICE = "cpu"
+WHISPER_DEVICE = "cuda"
 
-WHISPER_COMPUTE_TYPE = "int8"
+WHISPER_COMPUTE_TYPE = "float16"
 
 
 # =========================
@@ -52,3 +53,9 @@ SUPPORTED_LANGUAGES = [
     "en",
     "hi"
 ]
+
+CLEANUP_PROVIDER = "languagetool"
+
+OLLAMA_MODEL = "qwen3:4b"
+
+OPENAI_API_KEY = ""

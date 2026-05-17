@@ -3,8 +3,15 @@ numpy
 faster-whisper
 pyautogui
 pynput
-openai-whisper
 ollama
 keyboard
 scipy
 python-dotenv
+
+--extra-index-url https://download.pytorch.org/whl/cu121
+
+torch
+torchvision
+torchaudio
+
+language-tool-python
