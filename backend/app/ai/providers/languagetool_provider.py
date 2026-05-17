@@ -21,7 +21,6 @@ class LanguageToolProvider(
     ) -> str:
         matches = self.tool.check(text)
 
-        return language_tool_python.correct(
-            text,
-            matches
+        return self.tool.correct(
+            text
         )

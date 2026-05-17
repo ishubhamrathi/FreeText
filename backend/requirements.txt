@@ -4,6 +4,7 @@ faster-whisper
 pyautogui
 pynput
 ollama
+openai
 keyboard
 scipy
 python-dotenv
