@@ -25,10 +25,6 @@ class LiveController:
 
     def start(self):
 
-        self.input.start()
-
-        self.streaming.start()
-
         if self.active:
             return
 
@@ -36,13 +32,14 @@ class LiveController:
             "Streaming started"
         )
 
-        self.active = True
+        self.input.start()
 
         self.streaming.start()
 
-    def stop(
-        self
-    ):
+        self.active = True
+
+
+    def stop(self):
 
         if not self.active:
             return
@@ -51,8 +48,8 @@ class LiveController:
             "Streaming stopped"
         )
 
-        self.input.stop()
-
         self.streaming.stop()
+
+        self.input.stop()
 
         self.active = False

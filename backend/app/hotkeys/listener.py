@@ -12,6 +12,7 @@ from hotkeys.live_controller import (
     LiveController
 )
 
+
 class HoldToTalkListener:
 
     def __init__(self):
@@ -24,6 +25,8 @@ class HoldToTalkListener:
             LiveController()
         )
 
+        self.streaming = False
+
     def on_press(
         self,
         key
@@ -35,9 +38,22 @@ class HoldToTalkListener:
             key_name
         )
 
-        if self.context.is_active(
-            PUSH_TO_TALK_KEYS
+        active = (
+            self.context.is_active(
+                PUSH_TO_TALK_KEYS
+            )
+        )
+
+        if (
+            active
+            and not self.streaming
         ):
+
+            print(
+                "Hold detected"
+            )
+
+            self.streaming = True
 
             self.controller.start()
 
@@ -48,9 +64,6 @@ class HoldToTalkListener:
 
         key_name = str(key)
 
-        self.context.release(
-            key_name
-        )
         was_active = (
             self.context.is_active(
                 PUSH_TO_TALK_KEYS
@@ -67,7 +80,17 @@ class HoldToTalkListener:
             )
         )
 
-        if was_active and not still_active:
+        if (
+            was_active
+            and not still_active
+            and self.streaming
+        ):
+
+            print(
+                "Released"
+            )
+
+            self.streaming = False
 
             self.controller.stop()
 
@@ -83,9 +106,6 @@ class HoldToTalkListener:
         )
 
         self.listener.start()
-
-        return self.listener
-
 
     def stop(
         self
