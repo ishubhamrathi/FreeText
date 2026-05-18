@@ -196,3 +196,30 @@ class StreamService:
                     f"Streaming error: "
                     f"{ex}"
                 )
+
+    def flush(
+        self
+    ):
+
+        tokens = (
+            self.stabilizer.flush()
+        )
+
+        committed = (
+            self.committer.commit(
+                tokens
+            )
+        )
+
+        if committed:
+
+            print(
+                f"FINAL: "
+                f"{committed}"
+            )
+
+            self.typing_service.type_text(
+                committed + " "
+            )
+
+        self.committer.reset()

@@ -14,6 +14,9 @@ class CommitEngine:
             for token in tokens
         ).strip()
 
+        if not text:
+            return ""
+
         if text.startswith(
             self.output
         ):
@@ -31,3 +34,9 @@ class CommitEngine:
         self.output = text
 
         return text
+
+    def reset(
+        self
+    ):
+
+        self.output = ""

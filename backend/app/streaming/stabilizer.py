@@ -2,7 +2,6 @@ from streaming.token import (
     TranscriptToken
 )
 
-
 class TokenStabilizer:
 
     def __init__(self):
@@ -27,10 +26,7 @@ class TokenStabilizer:
 
             new = current[i]
 
-            if (
-                old.text
-                == new.text
-            ):
+            if old.text == new.text:
 
                 stable.append(
                     new
@@ -43,3 +39,15 @@ class TokenStabilizer:
         self.previous = current
 
         return stable
+
+    def flush(
+        self
+    ):
+
+        remaining = (
+            self.previous
+        )
+
+        self.previous = []
+
+        return remaining

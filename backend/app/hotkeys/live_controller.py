@@ -50,6 +50,8 @@ class LiveController:
 
         self.streaming.stop()
 
+        self.streaming.flush()
+
         self.input.stop()
 
         self.active = False
