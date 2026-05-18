@@ -18,44 +18,38 @@ class SessionRepository:
         session: SessionRecord
     ):
 
-        cursor = (
-            self.db.connection.cursor()
-        )
+        with self.db.lock:
 
-        cursor.execute(
-            """
-            INSERT INTO sessions(
-                started_at,
-                ended_at,
-                duration,
-                language,
-                raw_text,
-                cleaned_text,
-                latency,
-                provider
+            cursor = (
+                self.db.connection.cursor()
             )
-            VALUES(
-                ?,?,?,?,?,?,?,?
+
+            cursor.execute(
+                """
+                INSERT INTO sessions(
+                    started_at,
+                    ended_at,
+                    duration,
+                    language,
+                    raw_text,
+                    cleaned_text,
+                    latency,
+                    provider
+                )
+                VALUES(
+                    ?,?,?,?,?,?,?,?
+                )
+                """,
+                (
+                    session.started_at,
+                    session.ended_at,
+                    session.duration,
+                    session.language,
+                    session.raw_text,
+                    session.cleaned_text,
+                    session.latency,
+                    session.provider
+                )
             )
-            """,
-            (
-                session.started_at,
-                session.ended_at,
-                session.duration,
-                session.language,
-                session.raw_text,
-                session.cleaned_text,
-                session.latency,
-                session.provider
-            )
-        )
 
-        print(
-            "[SESSION SAVED]"
-        )
-
-        print(
-            cleaned_text
-        )
-
-        self.db.connection.commit()
+            self.db.connection.commit()

@@ -32,6 +32,10 @@ from typing_service.service import (
     TypingService
 )
 
+from storage.session_service import (
+    SessionService
+)
+
 class StreamService:
 
 
@@ -55,6 +59,10 @@ class StreamService:
             TypingService()
         )
 
+        self.session_service = (
+            SessionService()
+        )
+
         self.running = False
 
     def append_audio(
@@ -72,6 +80,8 @@ class StreamService:
             return
 
         self.running = True
+
+        self.session_service.start_session()
 
         self.worker_thread = (
             threading.Thread(
@@ -98,7 +108,8 @@ class StreamService:
             self.worker_thread.join(
                 timeout=2
             )
-
+        self.session_service.finish()
+        
         print(
             "Worker stopped"
         )
@@ -167,10 +178,13 @@ class StreamService:
                 )
 
                 if committed:
-
                     print(
-                        f"LIVE: "
-                        f"{committed}"
+                        f"LIVE: {committed}"
+                    )
+
+                    self.session_service.add_text(
+                        committed,
+                        committed
                     )
 
                     self.typing_service.type_text(

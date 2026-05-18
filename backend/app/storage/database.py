@@ -1,10 +1,11 @@
 import sqlite3
-
+import threading
 from pathlib import Path
 
 from config.settings import (
     DATABASE_PATH
 )
+
 
 
 class Database:
@@ -16,9 +17,13 @@ class Database:
             exist_ok=True
         )
 
+        self.lock = threading.Lock()
+
         self.connection = sqlite3.connect(
-            DATABASE_PATH
+            DATABASE_PATH,
+            check_same_thread=False
         )
+
 
         self.initialize()
 
