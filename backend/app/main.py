@@ -16,21 +16,10 @@ def shutdown(
 
     global running
 
-    print(
-        "\nStopping FreeText..."
-    )
-
     running = False
 
 
 def main():
-
-    global running
-
-    signal.signal(
-        signal.SIGINT,
-        shutdown
-    )
 
     listener = (
         HoldToTalkListener()
@@ -39,24 +28,14 @@ def main():
     listener.listen()
 
     print(
-        "FreeText started"
-    )
-
-    print(
         "Hold Win + Alt"
     )
 
-    while running:
-
-        time.sleep(
-            1
-        )
-
-    listener.stop()
-
-    print(
-        "Shutdown complete"
-    )
+    listener.controller \
+        .streaming \
+        .debug_ui \
+        .overlay \
+        .run()
 
 
 if __name__ == "__main__":
