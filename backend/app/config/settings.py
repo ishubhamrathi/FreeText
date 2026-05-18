@@ -95,3 +95,10 @@ LIVE_STRIDE_SECONDS = (
 
 
 LIVE_PROCESS_INTERVAL = 3
+
+
+DATABASE_PATH = (
+    BASE_DIR
+    / "data"
+    / "freetext.db"
+)
