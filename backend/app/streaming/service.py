@@ -32,11 +32,6 @@ from typing_service.service import (
     TypingService
 )
 
-from debug_ui.service import (
-    DebugUiService
-)
-
-
 class StreamService:
 
 
@@ -61,12 +56,6 @@ class StreamService:
         )
 
         self.running = False
-
-        self.debug_ui = (
-            DebugUiService()
-        )
-
-        self.chunk_count = 0
 
     def append_audio(
         self,
@@ -100,10 +89,6 @@ class StreamService:
         )
 
         self.running = False
-
-        self.debug_ui.publish(
-            status="IDLE"
-        )
 
         if hasattr(
             self,
@@ -230,14 +215,6 @@ class StreamService:
             )
         )
 
-        self.chunk_count += 1
-
-        self.debug_ui.publish(
-            status="PROCESSING",
-            committed=committed,
-            language="en",   # temporary
-            chunk_number=self.chunk_count
-        )
 
         if committed:
 

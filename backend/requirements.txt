@@ -16,3 +16,6 @@ torchvision
 torchaudio
 
 language-tool-python
+
+pystray
+pillow
