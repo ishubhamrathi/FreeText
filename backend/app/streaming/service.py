@@ -161,7 +161,10 @@ class StreamService:
 
                 committed = (
                     self.committer.commit(
-                        stable
+                        sorted(
+                            tokens,
+                            key=lambda x: x.start
+                        )
                     )
                 )
 
@@ -207,7 +210,10 @@ class StreamService:
 
         committed = (
             self.committer.commit(
-                tokens
+                sorted(
+                    tokens,
+                    key=lambda x: x.start
+                )
             )
         )
 
@@ -221,5 +227,13 @@ class StreamService:
             self.typing_service.type_text(
                 committed + " "
             )
+
+        self.committer.reset()
+
+    def reset(
+        self
+    ):
+
+        self.stabilizer.previous = []
 
         self.committer.reset()

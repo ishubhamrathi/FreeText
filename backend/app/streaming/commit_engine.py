@@ -1,42 +1,48 @@
+from streaming.token import (
+    TranscriptToken
+)
+
+
 class CommitEngine:
 
     def __init__(self):
 
-        self.output = ""
+        self.committed_until = 0.0
 
     def commit(
         self,
-        tokens
+        tokens: list[
+            TranscriptToken
+        ]
     ):
 
-        text = " ".join(
-            token.text
-            for token in tokens
-        ).strip()
+        output = []
 
-        if not text:
-            return ""
+        for token in tokens:
 
-        if text.startswith(
-            self.output
-        ):
+            if (
+                token.end
+                <= self.committed_until
+            ):
 
-            delta = text[
-                len(
-                    self.output
-                ):
-            ].strip()
+                continue
 
-            self.output = text
+            output.append(
+                token.text
+            )
 
-            return delta
+            self.committed_until = (
+                token.end
+            )
 
-        self.output = text
-
-        return text
+        return (
+            " ".join(
+                output
+            ).strip()
+        )
 
     def reset(
         self
     ):
 
-        self.output = ""
+        self.committed_until = 0.0

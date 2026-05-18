@@ -1,7 +1,24 @@
+from pynput.keyboard import (
+    Controller
+)
+
+
 class TypingService:
 
-    def type_text(self, text):
-        from pynput.keyboard import Controller
+    def __init__(self):
 
-        keyboard = Controller()
-        keyboard.type(text)
+        self.keyboard = (
+            Controller()
+        )
+
+    def type_text(
+        self,
+        text: str
+    ):
+
+        if not text.strip():
+            return
+
+        self.keyboard.type(
+            text + " "
+        )

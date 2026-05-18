@@ -28,6 +28,8 @@ class LiveController:
         if self.active:
             return
 
+        self.streaming.reset()
+
         print(
             "Streaming started"
         )
