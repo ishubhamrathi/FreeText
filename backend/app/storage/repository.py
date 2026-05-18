@@ -53,3 +53,29 @@ class SessionRepository:
             )
 
             self.db.connection.commit()
+
+    def get_by_id(
+        self,
+        session_id: int
+    ):
+
+        with self.db.lock:
+
+            cursor = (
+                self.db.connection.cursor()
+            )
+
+            cursor.execute(
+                """
+                SELECT
+                    id,
+                    cleaned_text
+                FROM sessions
+                WHERE id = ?
+                """,
+                (
+                    session_id,
+                )
+            )
+
+            return cursor.fetchone()
