@@ -2,6 +2,11 @@ import time
 
 import sounddevice as sd
 
+from path_setup import add_app_to_path
+
+
+add_app_to_path()
+
 import config.settings as settings
 
 settings.LIVE_PROCESS_INTERVAL = settings.LIVE_STRIDE_SECONDS

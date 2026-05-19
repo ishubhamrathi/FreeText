@@ -1,22 +1,7 @@
-import sys
-
-from pathlib import Path
+from path_setup import add_app_to_path
 
 
-ROOT_DIR = (
-    Path(__file__)
-    .resolve()
-    .parent.parent
-)
-
-APP_DIR = (
-    ROOT_DIR
-    / "app"
-)
-
-sys.path.append(
-    str(APP_DIR)
-)
+add_app_to_path()
 
 from export.manager import (
     ExportManager

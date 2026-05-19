@@ -8,7 +8,7 @@ from config.settings import (
     WHISPER_COMPUTE_TYPE
 )
 
-from models.transcription_result import (
+from transcription.result import (
     SegmentResult,
     TranscriptionResult
 )

@@ -1,3 +1,8 @@
+from path_setup import add_app_to_path
+
+
+add_app_to_path()
+
 from storage.database import (
     Database
 )
