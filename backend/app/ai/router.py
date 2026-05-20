@@ -1,9 +1,17 @@
+from ai.providers.gemini_provider import (
+    GeminiProvider
+)
+
 from ai.providers.languagetool_provider import (
     LanguageToolProvider
 )
 
 from ai.providers.local_provider import (
     LocalProvider
+)
+
+from ai.providers.openai_provider import (
+    OpenAiProvider
 )
 
 
@@ -18,21 +26,18 @@ class AiRouter:
 
             "languagetool":
             LanguageToolProvider(),
+
+            "openai":
+            OpenAiProvider(),
+
+            "gemini":
+            GeminiProvider()
         }
 
     def get_provider(
         self,
         provider
     ):
-
-        if provider not in self.providers:
-
-            raise ValueError(
-                f"""
-Unknown provider:
-{provider}
-"""
-            )
 
         return (
             self.providers[

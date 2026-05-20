@@ -1,46 +1,102 @@
-from openai import OpenAI
+import time
+
+from ai.models.cleanup_result import (
+    CleanupResult
+)
 
 from ai.providers.base import (
-    CleanupProvider
-)
-
-from config.settings import (
-    OPENAI_API_KEY
+    AiProvider
 )
 
 
-class OpenAIProvider(
-    CleanupProvider
+class OpenAiProvider(
+    AiProvider
 ):
 
     def __init__(self):
-        self.client = OpenAI(
-            api_key=OPENAI_API_KEY
-        )
 
-    def cleanup_text(
+        self.client = None
+
+        self.api_key = ""
+
+    def configure(
         self,
-        text: str
-    ) -> str:
+        api_key
+    ):
+
+        self.api_key = api_key
+
+        if api_key:
+
+            from openai import OpenAI
+
+            self.client = (
+                OpenAI(
+                    api_key=api_key
+                )
+            )
+
+    def process(
+        self,
+        text,
+        language="auto"
+    ):
+
+        start = time.time()
+
+        if not self.client:
+
+            return CleanupResult(
+                text=text,
+                provider="openai",
+                language=language
+            )
+
         response = (
             self.client.chat.completions.create(
                 model="gpt-4.1-mini",
+
                 messages=[
                     {
-                        "role": "user",
+                        "role":
+                        "system",
+
                         "content":
-                        (
-                            "Fix grammar and punctuation:\n\n"
-                            + text
-                        )
+                        """
+Fix grammar.
+Keep original meaning.
+Return only cleaned text.
+"""
+                    },
+
+                    {
+                        "role":
+                        "user",
+
+                        "content":
+                        text
                     }
                 ]
             )
         )
 
-        return (
+        cleaned = (
             response
             .choices[0]
             .message.content
-            .strip()
+        )
+
+        return CleanupResult(
+
+            text=cleaned,
+
+            provider="openai",
+
+            latency=round(
+                time.time()
+                - start,
+                3
+            ),
+
+            language=language
         )
