@@ -20,4 +20,3 @@ language-tool-python
 pystray
 pillow
 pyperclip
-harper

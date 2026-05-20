@@ -1,7 +1,3 @@
-from ai.providers.harper_provider import (
-    HarperProvider
-)
-
 from ai.providers.languagetool_provider import (
     LanguageToolProvider
 )
@@ -22,9 +18,6 @@ class AiRouter:
 
             "languagetool":
             LanguageToolProvider(),
-
-            "harper":
-            HarperProvider()
         }
 
     def get_provider(

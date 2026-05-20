@@ -13,8 +13,6 @@ class FallbackManager:
 
         self.chain = [
 
-            "harper",
-
             "languagetool",
 
             "local"
