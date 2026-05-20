@@ -1,3 +1,15 @@
+from tagging.providers.gemini_provider import (
+    GeminiTagProvider
+)
+
+from tagging.providers.local_ai_provider import (
+    LocalAiTagProvider
+)
+
+from tagging.providers.openai_provider import (
+    OpenAiTagProvider
+)
+
 from tagging.providers.rule_provider import (
     RuleTagProvider
 )
@@ -7,19 +19,35 @@ class TagProviderRouter:
 
     def __init__(self):
 
-        self.rule = (
-            RuleTagProvider()
-        )
+        self.providers = {
+
+            "rule":
+            RuleTagProvider(),
+
+            "local":
+            LocalAiTagProvider(),
+
+            "openai":
+            OpenAiTagProvider(),
+
+            "gemini":
+            GeminiTagProvider()
+        }
 
     def get_provider(
         self,
-        provider="rule"
+        provider
     ):
 
-        if provider == "rule":
+        if provider not in self.providers:
 
-            return self.rule
+            raise ValueError(
+                f"""
+Unknown tag provider:
+{provider}
+"""
+            )
 
-        raise ValueError(
-            f"Unknown provider: {provider}"
-        )
+        return self.providers[
+            provider
+        ]

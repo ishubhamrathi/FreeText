@@ -14,15 +14,18 @@ class TagManager:
     def generate(
         self,
         text,
-        provider="rule"
+        provider="rule",
+        language="auto"
     ):
 
         tagger = (
-            self.router.get_provider(
+            self.router
+            .get_provider(
                 provider
             )
         )
 
         return tagger.generate(
-            text
+            text=text,
+            language=language
         )

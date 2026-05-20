@@ -1,5 +1,9 @@
 from datetime import datetime
 
+from tagging.manager import (
+    TagManager
+)
+
 from storage.models.session import (
     SessionRecord
 )
@@ -8,9 +12,6 @@ from storage.repository import (
     SessionRepository
 )
 
-from tagging.manager import (
-    TagManager
-)
 
 class SessionService:
 
@@ -20,19 +21,25 @@ class SessionService:
             SessionRepository()
         )
 
+        self.tag_manager = (
+            TagManager()
+        )
+
+        self.reset()
+
+    def reset(
+        self
+    ):
+
         self.started_at = None
 
         self.raw_parts = []
 
         self.cleaned_parts = []
 
-        self.language = "unknown"
+        self.language = "auto"
 
         self.latency = 0.0
-        
-        self.tag_manager = (
-            TagManager()
-        )
 
     def start_session(
         self
@@ -64,6 +71,10 @@ class SessionService:
         self
     ):
 
+        if self.started_at is None:
+
+            return
+
         ended_at = (
             datetime.now()
         )
@@ -79,7 +90,9 @@ class SessionService:
 
         tags = (
             self.tag_manager.generate(
-                cleaned
+                cleaned,
+                provider="rule",
+                language=self.language
             )
         )
 
@@ -110,6 +123,4 @@ class SessionService:
             record
         )
 
-        print(
-            "[SESSION SAVED]"
-        )
+        self.reset()

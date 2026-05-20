@@ -1,9 +1,9 @@
-from tagging.providers.base import (
-    TagProvider
-)
-
 from tagging.auto_tagger import (
     AutoTagger
+)
+
+from tagging.providers.base import (
+    TagProvider
 )
 
 
@@ -19,7 +19,8 @@ class RuleTagProvider(
 
     def generate(
         self,
-        text
+        text,
+        language="auto"
     ):
 
         return self.tagger.detect(
