@@ -1,9 +1,9 @@
-from ai.config import (
-    AiConfig
-)
-
 from ai.router import (
     AiRouter
+)
+
+from settings.manager import (
+    SettingsManager
 )
 
 
@@ -15,17 +15,8 @@ class AiManager:
             AiRouter()
         )
 
-        self.config = (
-            AiConfig()
-        )
-
-    def set_provider(
-        self,
-        provider
-    ):
-
-        self.config.set_provider(
-            provider
+        self.settings = (
+            SettingsManager()
         )
 
     def cleanup(
@@ -40,8 +31,9 @@ class AiManager:
         if active is None:
 
             active = (
-                self.config
-                .get_provider()
+                self.settings
+                .get()
+                .ai_provider
             )
 
         engine = (

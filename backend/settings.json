@@ -1,0 +1,10 @@
+{
+    "ai_provider": "languagetool",
+    "language": "auto",
+    "typing_mode": "clipboard",
+    "fallback_enabled": true,
+    "continuous_mode": false,
+    "wake_phrase_enabled": false,
+    "openai_key": "",
+    "gemini_key": ""
+}
