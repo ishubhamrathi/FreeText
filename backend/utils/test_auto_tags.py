@@ -1,6 +1,4 @@
-from path_setup import (
-    add_app_to_path
-)
+from path_setup import add_app_to_path
 
 add_app_to_path()
 
@@ -15,8 +13,9 @@ print(
     manager.generate(
         """
         Need to fix API bug
-        for Spring service
+        in Spring service
         and deploy later
-        """
+        """,
+        provider="rule"
     )
 )

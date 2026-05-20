@@ -1,5 +1,5 @@
-from tagging.auto_tagger import (
-    AutoTagger
+from tagging.provider_router import (
+    TagProviderRouter
 )
 
 
@@ -7,15 +7,22 @@ class TagManager:
 
     def __init__(self):
 
-        self.tagger = (
-            AutoTagger()
+        self.router = (
+            TagProviderRouter()
         )
 
     def generate(
         self,
-        text
+        text,
+        provider="rule"
     ):
 
-        return self.tagger.detect(
+        tagger = (
+            self.router.get_provider(
+                provider
+            )
+        )
+
+        return tagger.generate(
             text
         )
