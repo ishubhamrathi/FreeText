@@ -1,3 +1,15 @@
+from extraction.action_extractor import (
+    ActionExtractor
+)
+
+from extraction.todo_extractor import (
+    TodoExtractor
+)
+
+from modes.coding_mode import (
+    CodingMode
+)
+
 from modes.meeting_mode import (
     MeetingMode
 )
@@ -11,18 +23,67 @@ class ModeManager:
             MeetingMode()
         )
 
+        self.coding = (
+            CodingMode()
+        )
+
+        self.todos = (
+            TodoExtractor()
+        )
+
+        self.actions = (
+            ActionExtractor()
+        )
+
     def process(
         self,
         mode,
         text
     ):
 
+        result = {
+
+            "tags": [],
+
+            "todos": [],
+
+            "actions": []
+        }
+
         if mode == "meeting":
 
-            return (
+            result[
+                "tags"
+            ] = (
                 self.meeting.process(
                     text
                 )
             )
 
-        return []
+        if mode == "coding":
+
+            result[
+                "tags"
+            ] = (
+                self.coding.process(
+                    text
+                )
+            )
+
+        result[
+            "todos"
+        ] = (
+            self.todos.extract(
+                text
+            )
+        )
+
+        result[
+            "actions"
+        ] = (
+            self.actions.extract(
+                text
+            )
+        )
+
+        return result
