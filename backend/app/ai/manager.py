@@ -52,6 +52,6 @@ class AiManager:
         )
 
         return engine.process(
-            text,
-            language
+            text=text,
+            language=language
         )

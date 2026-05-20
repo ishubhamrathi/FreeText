@@ -12,6 +12,8 @@ class AiConfig:
 
         self.api_key = ""
 
+        self.use_fallback = True
+
     def set_provider(
         self,
         provider
@@ -24,3 +26,10 @@ class AiConfig:
     ):
 
         return self.provider
+
+    def enable_fallback(
+        self,
+        enabled
+    ):
+
+        self.use_fallback = enabled
