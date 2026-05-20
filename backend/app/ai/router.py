@@ -35,9 +35,14 @@ class AiRouter:
         if provider not in self.providers:
 
             raise ValueError(
-                provider
+                f"""
+Unknown provider:
+{provider}
+"""
             )
 
-        return self.providers[
-            provider
-        ]
+        return (
+            self.providers[
+                provider
+            ]
+        )
