@@ -11,22 +11,30 @@ class HotwordManager:
 
         lower = text.lower()
 
-        if "start coding mode" in lower:
+        modes = {
 
-            self.mode = "coding"
+            "start coding mode":
+            "coding",
 
-            return "coding"
+            "start meeting mode":
+            "meeting",
 
-        if "start meeting mode" in lower:
+            "start youtube mode":
+            "youtube",
 
-            self.mode = "meeting"
+            "start journal mode":
+            "journal",
 
-            return "meeting"
+            "reset mode":
+            "default"
+        }
 
-        if "reset mode" in lower:
+        for phrase, mode in modes.items():
 
-            self.mode = "default"
+            if phrase in lower:
 
-            return "default"
+                self.mode = mode
+
+                return mode
 
         return self.mode

@@ -1,3 +1,7 @@
+from commands.capitalization import (
+    SmartCapitalization
+)
+
 from commands.hotword import (
     HotwordManager
 )
@@ -23,12 +27,20 @@ class CommandProcessor:
             SmartPunctuation()
         )
 
+        self.capitalization = (
+            SmartCapitalization()
+        )
+
     def process(
         self,
         text
     ):
 
-        lower = text.lower().strip()
+        lower = (
+            text
+            .lower()
+            .strip()
+        )
 
         if lower == "undo":
 
@@ -38,12 +50,12 @@ class CommandProcessor:
                 undo=True
             )
 
-        if lower == "undo word":
+        if lower == "new paragraph":
 
             return CommandResult(
-                text="",
+                text="\n\n",
                 handled=True,
-                undo=True
+                new_paragraph=True
             )
 
         mode = (
@@ -52,13 +64,19 @@ class CommandProcessor:
             )
         )
 
-        processed = (
+        text = (
             self.punctuation.process(
                 text
             )
         )
 
+        text = (
+            self.capitalization.process(
+                text
+            )
+        )
+
         return CommandResult(
-            text=processed,
+            text=text,
             mode=mode
         )
