@@ -1,66 +1,43 @@
-from config.settings import (
-    CLEANUP_MODE
+from ai.providers.harper_provider import (
+    HarperProvider
+)
+
+from ai.providers.languagetool_provider import (
+    LanguageToolProvider
+)
+
+from ai.providers.local_provider import (
+    LocalProvider
 )
 
 
-class CleanupRouter:
+class AiRouter:
 
     def __init__(self):
 
-        from ai.providers.languagetool_provider import (
-            LanguageToolProvider
-        )
-
-        from ai.providers.ollama_provider import (
-            OllamaProvider
-        )
-
-        self.language_tool = (
-            LanguageToolProvider()
-        )
-
-        self.ollama = (
-            OllamaProvider()
-        )
-
         self.providers = {
-            "languagetool":
-                self.language_tool,
 
-            "ollama":
-                self.ollama
+            "local":
+            LocalProvider(),
+
+            "languagetool":
+            LanguageToolProvider(),
+
+            "harper":
+            HarperProvider()
         }
 
     def get_provider(
         self,
-        language: str
+        provider
     ):
 
-        if CLEANUP_MODE != "local":
+        if provider not in self.providers:
 
-            print(
-                f"Forced provider: "
-                f"{CLEANUP_MODE}"
+            raise ValueError(
+                provider
             )
 
-            return self.providers[
-                CLEANUP_MODE
-            ]
-
-        print(
-            "Using local routing"
-        )
-
-        if language == "en":
-
-            print(
-                "English → LanguageTool"
-            )
-
-            return self.language_tool
-
-        print(
-            "Multilingual → Ollama"
-        )
-
-        return self.ollama
+        return self.providers[
+            provider
+        ]

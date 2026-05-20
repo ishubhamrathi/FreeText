@@ -1,16 +1,20 @@
 from abc import ABC
 from abc import abstractmethod
 
+from ai.models.cleanup_result import (
+    CleanupResult
+)
 
-class CleanupProvider(ABC):
+
+class AiProvider(
+    ABC
+):
 
     @abstractmethod
-    def cleanup_text(
+    def process(
         self,
-        text: str
-    ) -> str:
-        pass
+        text,
+        language="auto"
+    ) -> CleanupResult:
 
-    @property
-    def uses_prompt(self) -> bool:
-        return False
+        pass

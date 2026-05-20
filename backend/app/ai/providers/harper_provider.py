@@ -7,7 +7,7 @@ from ai.providers.base import (
 )
 
 
-class LanguageToolProvider(
+class HarperProvider(
     AiProvider
 ):
 
@@ -19,6 +19,6 @@ class LanguageToolProvider(
 
         return CleanupResult(
             text=text,
-            provider="languagetool",
+            provider="harper",
             language=language
         )
