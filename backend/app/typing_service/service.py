@@ -2,6 +2,10 @@ from pynput.keyboard import (
     Controller
 )
 
+from pynput.keyboard import (
+    Key
+)
+
 
 class TypingService:
 
@@ -13,12 +17,27 @@ class TypingService:
 
     def type_text(
         self,
-        text: str
+        text
     ):
 
-        if not text.strip():
+        if not text:
+
             return
 
         self.keyboard.type(
-            text + " "
+            text
         )
+
+    def undo_last_word(
+        self
+    ):
+
+        for _ in range(15):
+
+            self.keyboard.press(
+                Key.backspace
+            )
+
+            self.keyboard.release(
+                Key.backspace
+            )
