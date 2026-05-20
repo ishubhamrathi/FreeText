@@ -27,28 +27,47 @@ class SessionRepository:
             cursor.execute(
                 """
                 INSERT INTO sessions(
+
                     started_at,
+
                     ended_at,
+
                     duration,
+
                     language,
+
                     raw_text,
+
                     cleaned_text,
+
                     latency,
-                    provider
+
+                    provider,
+
+                    tags
                 )
                 VALUES(
-                    ?,?,?,?,?,?,?,?
+                    ?,?,?,?,?,?,?,?,?
                 )
                 """,
                 (
                     session.started_at,
+
                     session.ended_at,
+
                     session.duration,
+
                     session.language,
+
                     session.raw_text,
+
                     session.cleaned_text,
+
                     session.latency,
-                    session.provider
+
+                    session.provider,
+
+                    session.tags
                 )
             )
 

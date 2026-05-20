@@ -34,6 +34,7 @@ class Database:
         cursor.execute(
             """
             CREATE TABLE IF NOT EXISTS sessions(
+
                 id INTEGER PRIMARY KEY,
 
                 started_at TEXT,
@@ -50,7 +51,9 @@ class Database:
 
                 latency REAL,
 
-                provider TEXT
+                provider TEXT,
+
+                tags TEXT
             )
             """
         )

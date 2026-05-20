@@ -20,3 +20,5 @@ class SessionRecord:
     latency: float
 
     provider: str
+
+    tags: str = ""
