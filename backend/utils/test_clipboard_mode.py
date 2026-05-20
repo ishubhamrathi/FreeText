@@ -1,3 +1,5 @@
+import time
+
 from path_setup import (
     add_app_to_path
 )
@@ -19,10 +21,22 @@ manager.set_mode(
     TypingMode.CLIPBOARD
 )
 
-input(
-    "Focus target and press enter..."
+print(
+    "Click target window"
+)
+
+print(
+    "Typing in 5 seconds..."
+)
+
+time.sleep(
+    5
 )
 
 manager.type(
     "Hello from FreeText clipboard mode"
+)
+
+print(
+    "Done"
 )
