@@ -1,3 +1,5 @@
+import pyperclip
+
 from pynput.keyboard import (
     Controller
 )
@@ -17,6 +19,15 @@ class TypingService:
 
         self.session_text = ""
 
+        self.use_clipboard = False
+
+    def enable_clipboard(
+        self,
+        enabled=True
+    ):
+
+        self.use_clipboard = enabled
+
     def type_text(
         self,
         text
@@ -26,11 +37,52 @@ class TypingService:
 
             return
 
-        self.keyboard.type(
+        if self.use_clipboard:
+
+            self.paste_text(
+                text
+            )
+
+        else:
+
+            self.keyboard.type(
+                text
+            )
+
+        self.session_text += text
+
+    def paste_text(
+        self,
+        text
+    ):
+
+        previous = (
+            pyperclip.paste()
+        )
+
+        pyperclip.copy(
             text
         )
 
-        self.session_text += text
+        self.keyboard.press(
+            Key.ctrl
+        )
+
+        self.keyboard.press(
+            "v"
+        )
+
+        self.keyboard.release(
+            "v"
+        )
+
+        self.keyboard.release(
+            Key.ctrl
+        )
+
+        pyperclip.copy(
+            previous
+        )
 
     def rollback(
         self,
@@ -41,23 +93,23 @@ class TypingService:
 
             return
 
-        rollback_count = count
+        remove = count
 
-        if rollback_count is None:
+        if remove is None:
 
-            rollback_count = len(
+            remove = len(
                 self.session_text
             )
 
-        rollback_count = min(
-            rollback_count,
+        remove = min(
+            remove,
             len(
                 self.session_text
             )
         )
 
         for _ in range(
-            rollback_count
+            remove
         ):
 
             self.keyboard.press(
@@ -70,17 +122,13 @@ class TypingService:
 
         self.session_text = (
             self.session_text[
-                :-rollback_count
+                :-remove
             ]
         )
 
     def rollback_last_word(
         self
     ):
-
-        if not self.session_text:
-
-            return
 
         words = (
             self.session_text
@@ -92,15 +140,15 @@ class TypingService:
 
             return
 
-        last = words[-1]
-
-        remove_count = (
-            len(last)
+        remove = (
+            len(
+                words[-1]
+            )
             + 1
         )
 
         self.rollback(
-            remove_count
+            remove
         )
 
     def clear_session(
