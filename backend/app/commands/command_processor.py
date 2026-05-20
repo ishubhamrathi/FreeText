@@ -15,12 +15,12 @@ class CommandProcessor:
 
     def __init__(self):
 
-        self.punctuation = (
-            SmartPunctuation()
-        )
-
         self.hotword = (
             HotwordManager()
+        )
+
+        self.punctuation = (
+            SmartPunctuation()
         )
 
     def process(
@@ -28,9 +28,17 @@ class CommandProcessor:
         text
     ):
 
-        lower = text.lower()
+        lower = text.lower().strip()
 
-        if lower.strip() == "undo":
+        if lower == "undo":
+
+            return CommandResult(
+                text="",
+                handled=True,
+                undo=True
+            )
+
+        if lower == "undo word":
 
             return CommandResult(
                 text="",
@@ -52,6 +60,5 @@ class CommandProcessor:
 
         return CommandResult(
             text=processed,
-            handled=False,
             mode=mode
         )
