@@ -8,6 +8,10 @@ from storage.repository import (
     SessionRepository
 )
 
+from tagging.manager import (
+    TagManager
+)
+
 class SessionService:
 
     def __init__(self):
@@ -25,6 +29,10 @@ class SessionService:
         self.language = "unknown"
 
         self.latency = 0.0
+        
+        self.tag_manager = (
+            TagManager()
+        )
 
     def start_session(
         self
@@ -65,7 +73,18 @@ class SessionService:
             - self.started_at
         ).total_seconds()
 
+        cleaned = " ".join(
+            self.cleaned_parts
+        )
+
+        tags = (
+            self.tag_manager.generate(
+                cleaned
+            )
+        )
+
         record = SessionRecord(
+
             started_at=self.started_at,
 
             ended_at=ended_at,
@@ -78,13 +97,13 @@ class SessionService:
                 self.raw_parts
             ),
 
-            cleaned_text=" ".join(
-                self.cleaned_parts
-            ),
+            cleaned_text=cleaned,
 
             latency=self.latency,
 
-            provider="local"
+            provider="local",
+
+            tags=tags
         )
 
         self.repository.save(
